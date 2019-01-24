@@ -27,11 +27,6 @@ build-options:
   ldflags: -fstack-protector-strong -Wl,-z,relro,-z,now
 
 modules:
-  - name: extensions
-    buildsystem: simple
-    build-commands:
-    - mkdir -p /app/extensions
-
   - name: dotnet
     buildsystem: simple
     build-commands:

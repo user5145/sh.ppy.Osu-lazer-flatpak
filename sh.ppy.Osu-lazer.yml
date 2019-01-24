@@ -1,0 +1,81 @@
+app-id: sh.ppy.Osu-lazer
+runtime: org.freedesktop.Platform//18.08
+sdk: org.freedesktop.Sdk//18.08
+
+finish-args:
+- "--share=ipc"
+- "--share=network"
+- "--socket=x11"
+- "--socket=wayland"
+- "--device=dri"
+- "--socket=pulseaudio"
+- "--device=all"
+- "--filesystem=home:ro"
+
+command: start
+
+inherit-extensions:
+  - org.freedesktop.Sdk.Extension.dotnet:
+    version: 18.08
+    subdirectories: false
+    no-auto-download: false
+    autodelete: true
+
+build-options:
+  cflags: -O2 -fstack-protector-strong -D_FORTIFY_SOURCE=2
+  cxxflags: -O2 -fstack-protector-strong -D_FORTIFY_SOURCE=2
+  ldflags: -fstack-protector-strong -Wl,-z,relro,-z,now
+
+modules:
+  - name: extensions
+    buildsystem: simple
+    build-commands:
+    - mkdir -p /app/extensions
+
+  - name: dotnet
+    buildsystem: simple
+    build-commands:
+    - /usr/lib/sdk/dotnet/install-sdk.sh
+
+  - name: osu
+    buildsystem: simple
+    build-options:
+      build-args:
+      - "--share=network"
+    build-commands:
+    - mkdir -p /app/osu
+    - /usr/lib/sdk/dotnet/enable.sh && /usr/lib/sdk/dotnet/bin/dotnet publish --configuration Release --runtime linux-x64 --self-contained false /property:Version=2018.1207.0 --output /app/osu
+    sources:
+    - type: git
+      url: https://github.com/ppy/osu.git
+      tag: 2018.1207.0
+      disable-shallow-clone: true
+
+  - name: start
+    buildsystem: simple
+    build-commands:
+    - install -d /app/bin
+    - install -Dm555 start /app/bin
+
+    sources:
+      - type: script
+        dest-filename: start
+        commands:
+        - PWD=/tmp /app/dotnet/bin/dotnet /app/osu/osu!.dll "$@"
+
+  - name: resources
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 sh.ppy.Osu-lazer.png /app/share/icons/hicolor/256x256/apps/sh.ppy.Osu-lazer.png
+      - install -Dm644 sh.ppy.Osu-lazer.appdata.xml /app/share/appdata/sh.ppy.Osu-lazer.appdata.xml
+      - install -Dm644 sh.ppy.Osu-lazer.desktop /app/share/applications/sh.ppy.Osu-lazer.desktop
+
+    sources:
+      - type: file
+        path: sh.ppy.Osu-lazer.png
+
+      - type: file
+        path: sh.ppy.Osu-lazer.appdata.xml
+
+      - type: file
+        path: sh.ppy.Osu-lazer.desktop

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+    <id>sh.ppy.Osu-lazer.desktop</id>
+    <metadata_license>CC-BY-NC-ND-4.0</metadata_license>
+    <project_license>LicenseRef-MIT</project_license>
+    <name>sh.ppy.Osu-lazer</name>
+    <summary>Rhythm is just a click away.</summary>
+    <description><p>Rhythm is just a click away. The future of osu! and the beginning of an open era! Commonly known by the codename "osu!lazer". Pew pew.</p></description>
+    
+    <project_group>Osu!</project_group>
+    <developer_name>peppy</developer_name>
+
+    <url type="homepage">https://osu.ppy.sh</url>
+
+    <categories>
+        <category>Game</category>
+    </categories>
+
+    <recommends>
+        <memory>2000</memory>
+    </recommends>
+
+    <releases>
+        <release date="2019-01-01" version="2019.01.01">
+            <description>
+                <ul>
+                    <li>Osu lazer.</li>
+                </ul>
+            </description>
+        </release>
+    </releases>
+</component>

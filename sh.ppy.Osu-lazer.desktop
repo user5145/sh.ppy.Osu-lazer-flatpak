@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Osu! lazer
+Comment=Rhythm is just a click away.
+Exec=start %F
+Icon=sh.ppy.Osu-lazer
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Game;
+Keywords=Real-time;

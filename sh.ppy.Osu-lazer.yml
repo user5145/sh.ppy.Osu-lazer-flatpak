@@ -1,6 +1,6 @@
 app-id: sh.ppy.Osu-lazer
-runtime: org.gnome.Platform//3.30
-sdk: org.gnome.Sdk//3.30
+runtime: org.freedesktop.Platform//18.08
+sdk: org.freedesktop.Sdk//18.08
 
 finish-args:
 - "--share=ipc"

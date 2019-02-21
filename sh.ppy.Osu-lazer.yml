@@ -1,6 +1,6 @@
 app-id: sh.ppy.Osu-lazer
-runtime: org.freedesktop.Platform//18.08
-sdk: org.freedesktop.Sdk//18.08
+runtime: org.gnome.Platform//3.30
+sdk: org.gnome.Sdk//3.30
 
 finish-args:
 - "--share=ipc"
@@ -18,7 +18,7 @@ command: start
 inherit-extensions:
   - org.freedesktop.Sdk.Extension.dotnet:
     version: 18.08
-    subdirectories: false
+    subdirectories: true
     no-auto-download: false
     autodelete: true
 
@@ -28,9 +28,33 @@ build-options:
   ldflags: -fstack-protector-strong -Wl,-z,relro,-z,now
 
 modules:
+  - "shared/gtk2/gtk2.json"
+
+  - name: glade
+    sources:
+    - type: archive
+      url: https://download.gnome.org/sources/libglade/2.6/libglade-2.6.4.tar.gz
+      size: 446008
+      sha256: c41d189b68457976069073e48d6c14c183075d8b1d8077cb6dfb8b7c5097add3
+
+  - name: libbass
+    buildsystem: simple
+    build-commands:
+    - mkdir -p /app/lib /app/dotnet/lib
+    - unzip bass24-linux.zip
+    - make
+    - cp libbass.so /app/dotnet/lib/
+    - chmod 755 /app/dotnet/lib/libbass.so
+    sources:
+    - type: file
+      url: http://dl.un4seen.com/files/bass24-linux.zip
+      sha256: 5f568dae267faba5d2c09cd2b9c677353681f9c5b96cfa283e66203955b85dc2
+      size: 900860
+
   - name: dotnet
     buildsystem: simple
     build-commands:
+    - mkdir -p /app/dotnet/lib
     - /usr/lib/sdk/dotnet/install-sdk.sh
 
   - name: osu
@@ -40,11 +64,11 @@ modules:
       - "--share=network"
     build-commands:
     - mkdir -p /app/osu
-    - /usr/lib/sdk/dotnet/enable.sh && /usr/lib/sdk/dotnet/bin/dotnet publish osu.Desktop --configuration Release --runtime linux-x64 --self-contained false /property:Version=2019.131.0 --output /app/osu
+    - /usr/lib/sdk/dotnet/enable.sh && /usr/lib/sdk/dotnet/bin/dotnet publish osu.Desktop --configuration Release --runtime linux-x64 --self-contained false /property:Version=2019.216.0 --output /app/osu
     sources:
     - type: git
       url: https://github.com/ppy/osu.git
-      tag: 2019.131.0
+      tag: 2019.216.0
       disable-shallow-clone: true
 
   - name: start

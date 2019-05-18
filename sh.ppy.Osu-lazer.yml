@@ -15,12 +15,8 @@ finish-args:
 
 command: start
 
-inherit-extensions:
-- org.freedesktop.Sdk.Extension.dotnet:
-  version: 18.08
-  subdirectories: false
-  no-auto-download: false
-  autodelete: true
+sdk-extensions:
+- org.freedesktop.Sdk.Extension.dotnet
 
 build-options:
   cflags: -O2 -fstack-protector-strong -D_FORTIFY_SOURCE=2

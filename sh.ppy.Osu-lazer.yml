@@ -36,11 +36,11 @@ modules:
     - "--share=network"
   build-commands:
   - mkdir -p /app/osu
-  - /usr/lib/sdk/dotnet/bin/dotnet publish osu.Desktop --configuration Release --runtime linux-x64 --self-contained false /property:Version=2019.730.0 --output /app/osu
+  - /usr/lib/sdk/dotnet/bin/dotnet publish osu.Desktop --configuration Release --runtime linux-x64 --self-contained false /property:Version=2019.930.0 --output /app/osu
   sources:
   - type: git
     url: https://github.com/ppy/osu.git
-    tag: 2019.730.0
+    tag: 2019.930.0
     disable-shallow-clone: true
 
 - name: start

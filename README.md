@@ -1,3 +1,5 @@
+## Moved to gitlab 
+https://gitlab.com/flatpak-repo/sh-ppy-Osu-lazer-flatpak
 # sh.ppy.Osu-lazer-flatpak
 
 To build run  
